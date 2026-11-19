@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         知能行题目解析提取
+// @name         znx题目解析提取
 // @namespace    https://github.com/yourname/znx-extract
 // @version      0.1.0
-// @description  在知能行训练页弹窗中注入「提取题目和解析」按钮，一键提取题目与解析并复制到剪贴板
+// @description  在znx训练页弹窗中注入「提取题目和解析」按钮，一键提取题目与解析并复制到剪贴板
 // @author       玄鸟墨色
 // @license      MIT
 // @match        https://*.bestzixue.com/*
