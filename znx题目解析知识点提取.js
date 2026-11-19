@@ -182,6 +182,7 @@
                 return{content: contentBox, btnContainer: containers[0], type: 3};
             }
         }
+        return {content: null, buttonContainer: null, type: 0}
     }
 
     // ------------------------------------------------------- 三、注入按钮
@@ -229,9 +230,21 @@
         }
 
         if (type === 3) {
-            if (content.querySelector('#' + CONFIG.BTN_ID)) return;
-            const box = btnContainer.cloneNode(true).appendChild(createButton(type))
-            content.appendChild(box);
+            const dialog = content.parentElement.parentElement;
+            const box = document.createElement('div'); // 或先 customElements.define 再用 'button-group'
+            box.style.cssText = [
+                'display: flex',
+                'flex-direction: row-reverse',
+                'flex-wrap: wrap',
+                'gap: 8px',
+                'padding: 0 15px 15px',
+                'margin: 0',
+                'border: none'
+            ].join(';');
+            if (dialog.querySelector('#' + CONFIG.BTN_ID)) return;
+            // const box = btnContainer.cloneNode(true).appendChild(createButton(type));
+            box.appendChild(createButton(type));
+            dialog.appendChild(box);
         } else {
             // 同一个弹窗内已注入则跳过
             if (btnContainer.querySelector('#' + CONFIG.BTN_ID)) return;
@@ -268,10 +281,12 @@
             let finalOutput = '';
             log('type:' + type);
             if (type === 1) {
+                finalOutput += '\begin{example}\n';
                 finalOutput += typesetting(htmlToLatex(
                     result.questionHTML.cloneNode(true), true),"qusetion");
                 finalOutput += typesetting(
                     htmlToLatex(result.answerHTML.cloneNode(true), false),"answer");
+                finalOutput += '\n\end{example}';
             }
             else if (type === 2 || type === 3){
                 finalOutput += htmlToLatex(result.eviewHTML);
